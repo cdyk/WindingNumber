@@ -1401,7 +1401,7 @@ inline T UT_SubtendedAngle<T, S>::computeAngle(const UT_Vector2T<T> &query_point
 }
 
 // Instantiate our templates.
-//template class UT_SolidAngle<fpreal32,fpreal32>;
+template class UT_SolidAngle<fpreal32,fpreal32>;
 // FIXME: The SIMD parts will need to be handled differently in order to support fpreal64.
 //template class UT_SolidAngle<fpreal64,fpreal32>;
 //template class UT_SolidAngle<fpreal64,fpreal64>;
