@@ -30,7 +30,7 @@
 #include "UT_FixedVector.h"
 #include "VM_SIMD.h"
 #include "SYS_Types.h"
-#include <igl/parallel_for.h>
+#include "ParallelFor.h"
 #include <type_traits>
 #include <utility>
 
@@ -110,7 +110,7 @@ inline UT_SolidAngle<T,S>::UT_SolidAngle()
 {}
 
 template<typename T,typename S>
-inline UT_SolidAngle<T,S>::~UT_SolidAngle()
+UT_SolidAngle<T,S>::~UT_SolidAngle()
 {
     // Default destruction works, but this needs to be outlined
     // to avoid having to include UT_BVHImpl.h in the header,
@@ -155,7 +155,7 @@ inline void UT_SolidAngle<T,S>::init(
     }
     else
     {
-      igl::parallel_for(ntriangles,
+      ParallelFor(ntriangles,
         [triangle_points,&triangle_boxes,positions](int i)
         {
           const int *cur_triangle_points = triangle_points + i*3;
@@ -952,7 +952,7 @@ inline void UT_SubtendedAngle<T,S>::init(
     }
     else
     {
-      igl::parallel_for(nsegments,
+      ParallelFor(nsegments,
         [segment_points,&segment_boxes,positions](int i)
         {
           const int *cur_segment_points = segment_points + i*2;

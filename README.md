@@ -13,9 +13,11 @@ Gavin Barill¹, Neil Dickson², Ryan Schmidt³, David I.W. Levin¹, Alec Jacobso
 
 _Note: this implementation is for triangle soups only, not point clouds._
 
-This version does _not_ depend on Intel TBB. Instead it depends on
+This version does _not_ depend on IGL.
+
+<del>This version does _not_ depend on Intel TBB. Instead it depends on
 [libigl](https://github.com/libigl/libigl)'s simpler `igl::parallel_for` (which
-uses `std::thread`)
+uses `std::thread`)</del>
 
 <del>This code, as written, depends on Intel's Threading Building Blocks (TBB) library for parallelism, but it should be fairly easy to change it to use any other means of threading, since it only uses parallel for loops with simple partitioning.</del>
 

@@ -38,8 +38,9 @@
 #include "UT_SmallArray.h"
 #include "SYS_Types.h"
 
-#include <igl/parallel_for.h>
+#include "ParallelFor.h"
 
+#include <cassert>
 #include <iostream>
 #include <algorithm>
 
@@ -329,7 +330,7 @@ inline void BVH<N>::traverseParallelHelper(
             }
         }
         // Now do the parallel ones
-        igl::parallel_for(
+        ParallelFor(
           nparallel,
           [this,nodei,&node,&nnodes,&next_nodes,&parallel_threshold,&functors,&local_data](int taski)
           {
@@ -425,7 +426,7 @@ inline void BVH<N>::traverseVectorHelper(
 template<uint N>
 template<typename SRC_INT_TYPE>
 inline void BVH<N>::createTrivialIndices(SRC_INT_TYPE* indices, const INT_TYPE n) noexcept {
-    igl::parallel_for(n, [indices,n](INT_TYPE i) { indices[i] = i; }, 65536);
+  ParallelFor(n, [indices,n](INT_TYPE i) { indices[i] = i; }, 65536);
 }
 
 template<uint N>
@@ -459,7 +460,7 @@ inline void BVH<N>::computeFullBoundingBox(Box<T,NAXES>& axes_minmax, const BOX_
     else {
         UT_SmallArray<Box<T,NAXES>> parallel_boxes;
         Box<T,NAXES> box;
-        igl::parallel_for(
+        ParallelFor(
           nboxes,
           [&parallel_boxes](int n){parallel_boxes.setSize(n);},
           [&parallel_boxes,indices,&boxes](int i, int t)
@@ -537,7 +538,7 @@ inline void BVH<N>::initNode(UT_Array<Node>& nodes, Node &node, const Box<T,NAXE
         UT_SmallArray<Node> parallel_parent_nodes;
         parallel_nodes.setSize(nparallel);
         parallel_parent_nodes.setSize(nparallel);
-        igl::parallel_for(
+        ParallelFor(
           nparallel,
           [&parallel_nodes,&parallel_parent_nodes,&sub_indices,boxes,&sub_boxes](int taski)
           {
@@ -1191,7 +1192,7 @@ inline void BVH<N>::split(const Box<T,NAXES>& axes_minmax, const BOX_TYPE* boxes
     else {
         UT_SmallArray<Box<T,NAXES>> parallel_boxes;
         UT_SmallArray<INT_TYPE> parallel_counts;
-        igl::parallel_for(
+        ParallelFor(
           nboxes,
           [&parallel_boxes,&parallel_counts](int n)
           {
