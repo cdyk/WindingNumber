@@ -34,6 +34,7 @@
 //#define FORCE_NON_SIMD
 
 #include "VM_SSEFunc.h"
+namespace igl { namespace FastWindingNumber {
 
 class v4uf;
 
@@ -446,4 +447,5 @@ typedef v4uu v4ui;
 #define VM_ALIGN(ptr, ASIZE, STYPE)	\
 		((((1<<ASIZE)-(intptr_t)ptr)&((1<<ASIZE)-1))/sizeof(STYPE))
 
+}}
 #endif
